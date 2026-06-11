@@ -1,0 +1,2590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.anthropic.com;" />
+
+  <title>AMIN PORTFOLIO — Digital Art & Design</title>
+  <meta name="description" content="Digital artist & designer — 2D illustration, concept art, digital painting, traditional art." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & VARS ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0C;
+      --bg2: #111116;
+      --bg3: #18181F;
+      --surface: #1E1E28;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.13);
+      --mint: #A8E6CF;
+      --lavender: #C9B1FF;
+      --rose: #FFB3C6;
+      --text: #F0EEF6;
+      --text-dim: #8A8796;
+      --text-muted: #4A4859;
+      --font-display: 'Cormorant Garant', serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      /* Anti-screenshot hint (CSS only) */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    /* ─── PROTECT CONTENT ────────────────────────────────────────── */
+    img, canvas, video {
+      -webkit-user-drag: none;
+      user-drag: none;
+      pointer-events: none;
+    }
+
+    /* Allow pointer on buttons/links inside, not images */
+    a, button { pointer-events: auto; }
+
+    /* ─── NOISE OVERLAY ──────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── SCROLLBAR ──────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 2px; }
+
+    /* ─── NAV ────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: rgba(10,10,12,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: padding 0.3s;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      background: linear-gradient(135deg, var(--mint), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--mint); }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-hire {
+      background: linear-gradient(135deg, var(--mint), var(--lavender));
+      color: #0A0A0C;
+      border: none;
+      padding: 9px 22px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-hire:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-chat-nav {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--text);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-chat-nav:hover { border-color: var(--lavender); color: var(--lavender); }
+
+    /* ─── CANVAS HERO ──────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      z-index: 10;
+      padding: 20px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--mint);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--mint), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      color: var(--text-dim);
+      font-size: 16px;
+      max-width: 440px;
+      margin: 0 auto 40px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.9s forwards;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--mint), var(--lavender));
+      color: #0A0A0C;
+      border: none;
+      padding: 14px 34px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--text);
+      padding: 13px 34px;
+      border-radius: 50px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--lavender); color: var(--lavender); transform: translateY(-2px); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.2s forwards;
+    }
+
+    .scroll-hint span {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--mint), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────────────────────── */
+    section {
+      padding: 100px 40px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--mint);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5vw, 62px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .section-title em { font-style: italic; color: var(--lavender); }
+
+    .section-desc {
+      color: var(--text-dim);
+      max-width: 520px;
+      font-weight: 300;
+      margin-bottom: 60px;
+    }
+
+    /* ─── CATEGORY FILTERS ──────────────────────────────────────── */
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 12px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      border-color: var(--mint);
+      color: var(--mint);
+      background: rgba(168, 230, 207, 0.06);
+    }
+
+    /* ─── PORTFOLIO GRID ────────────────────────────────────────── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .portfolio-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(168,230,207,0.1);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--bg3);
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+      /* Watermark via CSS pseudo-element */
+    }
+
+    .portfolio-card:hover .card-img-wrap img { transform: scale(1.05); }
+
+    /* Watermark overlay */
+    .card-img-wrap::after {
+      content: '© AMIN PORTFOLIO';
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.28);
+      pointer-events: none;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      z-index: 5;
+    }
+
+    /* Block overlay on hover */
+    .card-protect {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      background: transparent;
+    }
+
+    .card-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(10,10,12,0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border2);
+      color: var(--text-dim);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    .card-body {
+      padding: 22px 24px;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    .card-desc {
+      color: var(--text-dim);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-year {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .card-arrow {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
+    .portfolio-card:hover .card-arrow {
+      border-color: var(--mint);
+      color: var(--mint);
+      background: rgba(168,230,207,0.06);
+    }
+
+    /* Empty state for placeholder */
+    .card-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* ─── ABOUT SECTION ─────────────────────────────────────────── */
+    #about { border-top: 1px solid var(--border); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: var(--radius-lg);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-img-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(168,230,207,0.06), rgba(201,177,255,0.06));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+    }
+
+    .about-badge .num {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--mint);
+      line-height: 1;
+    }
+
+    .about-badge .label {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .skill-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .skill-tag:hover { border-color: var(--lavender); color: var(--lavender); }
+
+    /* ─── SERVICES ──────────────────────────────────────────────── */
+    #services { border-top: 1px solid var(--border); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(168,230,207,0.25);
+      transform: translateY(-4px);
+    }
+
+    .service-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .service-icon.mint { background: rgba(168,230,207,0.1); }
+    .service-icon.lavender { background: rgba(201,177,255,0.1); }
+    .service-icon.rose { background: rgba(255,179,198,0.1); }
+
+    .service-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    .service-desc {
+      color: var(--text-dim);
+      font-size: 13px;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .service-price {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--mint);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── HIRE / PROJECT REQUEST ────────────────────────────────── */
+    #hire { border-top: 1px solid var(--border); }
+
+    .hire-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 56px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hire-wrap::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,230,207,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hire-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 13px 16px;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--mint);
+      box-shadow: 0 0 0 3px rgba(168,230,207,0.08);
+    }
+
+    .form-group select { appearance: none; cursor: pointer; }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* ─── PAYMENT ───────────────────────────────────────────────── */
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .payment-option {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+
+    .payment-option input[type="radio"] { position: absolute; opacity: 0; }
+
+    .payment-option .pay-icon { font-size: 20px; margin-bottom: 4px; }
+    .payment-option .pay-label { font-size: 10px; color: var(--text-dim); letter-spacing: 0.05em; }
+
+    .payment-option:has(input:checked) {
+      border-color: var(--mint);
+      background: rgba(168,230,207,0.06);
+    }
+
+    /* ─── CONTACT / REGISTER ────────────────────────────────────── */
+    #contact { border-top: 1px solid var(--border); }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .contact-info p {
+      color: var(--text-dim);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-link {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    .social-link:hover {
+      border-color: var(--lavender);
+      color: var(--lavender);
+      transform: translateY(-2px);
+    }
+
+    /* ─── CHAT WIDGET ───────────────────────────────────────────── */
+    #chat-fab {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9998;
+    }
+
+    .chat-toggle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--mint), var(--lavender));
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 8px 30px rgba(168,230,207,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .chat-toggle:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(168,230,207,0.45); }
+
+    .chat-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--rose);
+      font-size: 9px;
+      color: #0A0A0C;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg);
+    }
+
+    #chat-window {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 360px;
+      height: 500px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow), 0 0 0 1px rgba(168,230,207,0.05);
+      z-index: 9997;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: opacity 0.3s, transform 0.3s;
+      transform-origin: bottom right;
+    }
+
+    #chat-window.hidden {
+      opacity: 0;
+      transform: scale(0.85) translateY(20px);
+      pointer-events: none;
+    }
+
+    .chat-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--mint), var(--lavender));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .chat-name { font-size: 14px; font-weight: 500; }
+    .chat-status { font-size: 11px; color: var(--mint); }
+
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .msg.bot {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+      border-radius: 4px 14px 14px 14px;
+    }
+
+    .msg.user {
+      background: linear-gradient(135deg, rgba(168,230,207,0.15), rgba(201,177,255,0.15));
+      border: 1px solid rgba(168,230,207,0.2);
+      align-self: flex-end;
+      border-radius: 14px 4px 14px 14px;
+    }
+
+    .msg-typing {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 12px 16px;
+    }
+
+    .msg-typing span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      animation: typingDot 1.2s ease-in-out infinite;
+    }
+
+    .msg-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .msg-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+    .chat-input-wrap {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
+    #chat-input {
+      flex: 1;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #chat-input:focus { border-color: var(--mint); }
+
+    .chat-send {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--mint), var(--lavender));
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #0A0A0C;
+      transition: transform 0.2s;
+    }
+
+    .chat-send:hover { transform: scale(1.08); }
+
+    /* ─── ADMIN PANEL ───────────────────────────────────────────── */
+    #admin-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    #admin-overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .admin-login {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-lg);
+      padding: 48px 52px;
+      width: 380px;
+      text-align: center;
+    }
+
+    .admin-login h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .admin-login p { color: var(--text-dim); font-size: 13px; margin-bottom: 32px; }
+
+    .admin-panel {
+      display: none;
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-lg);
+      width: 90vw;
+      max-width: 900px;
+      max-height: 88vh;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .admin-panel.active { display: flex; }
+
+    .admin-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+
+    .admin-tab {
+      padding: 16px 24px;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 13px;
+      font-family: var(--font-body);
+      letter-spacing: 0.04em;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .admin-tab.active { color: var(--mint); border-bottom-color: var(--mint); }
+
+    .admin-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .admin-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 2px dashed var(--border2);
+      border-radius: var(--radius-lg);
+      padding: 50px 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 24px;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-over {
+      border-color: var(--mint);
+      background: rgba(168,230,207,0.04);
+    }
+
+    .upload-icon { font-size: 36px; margin-bottom: 12px; }
+    .upload-zone h4 { font-family: var(--font-display); font-size: 18px; font-weight: 400; margin-bottom: 8px; }
+    .upload-zone p { color: var(--text-dim); font-size: 13px; }
+
+    /* Projects table */
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .admin-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+    }
+
+    .admin-table td {
+      padding: 14px 14px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-dim);
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .status-badge {
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.06em;
+    }
+
+    .status-badge.pending { background: rgba(255,179,198,0.12); color: var(--rose); border: 1px solid rgba(255,179,198,0.2); }
+    .status-badge.published { background: rgba(168,230,207,0.1); color: var(--mint); border: 1px solid rgba(168,230,207,0.2); }
+    .status-badge.new { background: rgba(201,177,255,0.1); color: var(--lavender); border: 1px solid rgba(201,177,255,0.2); }
+
+    /* ─── LIGHTBOX ──────────────────────────────────────────────── */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.94);
+      z-index: 9990;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    #lightbox.visible { opacity: 1; pointer-events: all; }
+
+    .lightbox-img {
+      max-width: 88vw;
+      max-height: 82vh;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      pointer-events: none;
+      position: relative;
+    }
+
+    /* Diagonal watermark on lightbox */
+    .lightbox-watermark {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.12);
+      transform: rotate(-30deg);
+      pointer-events: none;
+      z-index: 5;
+      white-space: nowrap;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 24px;
+      right: 28px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border2);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .lightbox-close:hover { background: rgba(255,255,255,0.15); }
+
+    .lightbox-info {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .lightbox-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 300;
+      margin-bottom: 4px;
+    }
+
+    .lightbox-cat { font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; font-family: var(--font-mono); }
+
+    /* ─── NOTIFICATION TOAST ──────────────────────────────────── */
+    #toast {
+      position: fixed;
+      top: 80px;
+      right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 14px 20px 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 10001;
+      font-size: 13px;
+      box-shadow: var(--shadow);
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 320px;
+    }
+
+    #toast.show { transform: translateX(0); }
+    #toast .t-icon { font-size: 18px; }
+    #toast .t-msg { color: var(--text); }
+    #toast.success .t-icon::before { content: '✅'; }
+    #toast.error .t-icon::before { content: '❌'; }
+    #toast.info .t-icon::before { content: '💬'; }
+
+    /* ─── FOOTER ────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 18px;
+      background: linear-gradient(135deg, var(--mint), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .footer-admin-trigger {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition: color 0.2s;
+    }
+
+    .footer-admin-trigger:hover { color: var(--text-dim); }
+
+    /* ─── UTILITY ───────────────────────────────────────────────── */
+    .hidden { display: none !important; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ─── ANIMATIONS ────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.15); }
+    }
+
+    @keyframes typingDot {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      section { padding: 70px 24px; }
+      .about-grid, .hire-grid, .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .hire-wrap { padding: 36px 28px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+      #chat-window { width: calc(100vw - 32px); right: 16px; }
+    }
+
+    @media (max-width: 600px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .hero-cta { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo">A M I N</div>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#hire">Hire Me</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-chat-nav" onclick="toggleChat()">💬 Chat</button>
+    <button class="btn-hire" onclick="document.getElementById('hire').scrollIntoView({behavior:'smooth'})">Start a Project</button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────────────── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Digital Artist · Visual Designer · Illustrator</p>
+    <h1 class="hero-title">Art that<br/><em>speaks</em><br/>before words</h1>
+    <p class="hero-sub">Crafting visual worlds through 2D illustration, digital painting, and concept art — where imagination meets craft.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})">Explore Work</button>
+      <button class="btn-outline" onclick="document.getElementById('hire').scrollIntoView({behavior:'smooth'})">Work Together</button>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ─── PORTFOLIO ─────────────────────────────────────────────────── -->
+<section id="portfolio">
+  <p class="section-label reveal">Selected Work</p>
+  <h2 class="section-title reveal">Creative <em>Portfolio</em></h2>
+  <p class="section-desc reveal">A curated selection of digital illustrations, concept art, and traditional artwork crafted for diverse creative visions.</p>
+
+  <div class="filters reveal">
+    <button class="filter-btn active" onclick="filterPortfolio('all', this)">All Work</button>
+    <button class="filter-btn" onclick="filterPortfolio('2d', this)">2D Digital</button>
+    <button class="filter-btn" onclick="filterPortfolio('painting', this)">Digital Painting</button>
+    <button class="filter-btn" onclick="filterPortfolio('3d', this)">3D / CGI</button>
+    <button class="filter-btn" onclick="filterPortfolio('traditional', this)">Traditional</button>
+  </div>
+
+  <div class="portfolio-grid" id="portfolio-grid">
+    <!-- Dynamically populated by JS -->
+  </div>
+</section>
+
+<!-- ─── ABOUT ─────────────────────────────────────────────────────── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-img">
+        <div class="about-img-inner">
+          <span style="font-size:48px;">🎨</span>
+          <span style="font-family: var(--font-mono); font-size:11px; letter-spacing:0.12em; color: var(--text-muted);">ARTIST PHOTO</span>
+          <span style="font-size:12px; color: var(--text-muted); text-align:center; max-width:180px;">Upload your photo via Admin Panel</span>
+        </div>
+      </div>
+      <div class="about-badge">
+        <div class="num" id="projects-count">0</div>
+        <div class="label">Projects Completed</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Where <em>imagination</em> becomes vision</h2>
+      <p style="color: var(--text-dim); font-size:15px; line-height:1.8; margin-bottom:20px;">
+        I'm a digital artist and visual designer specializing in 2D illustration, digital painting, and concept art. With a foundation in traditional drawing, I bridge the tactile world of pencil and ink with the limitless possibilities of digital media.
+      </p>
+      <p style="color: var(--text-dim); font-size:15px; line-height:1.8; margin-bottom:30px;">
+        Whether crafting character concepts, environment paintings, or brand illustrations — I bring a meticulous eye for composition, color, and narrative to every project.
+      </p>
+      <div class="skills-list">
+        <span class="skill-tag">2D Illustration</span>
+        <span class="skill-tag">Concept Art</span>
+        <span class="skill-tag">Digital Painting</span>
+        <span class="skill-tag">Character Design</span>
+        <span class="skill-tag">Environment Art</span>
+        <span class="skill-tag">Traditional Drawing</span>
+        <span class="skill-tag">3D Modeling</span>
+        <span class="skill-tag">Photoshop</span>
+        <span class="skill-tag">Procreate</span>
+        <span class="skill-tag">Blender</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─────────────────────────────────────────────────── -->
+<section id="services">
+  <p class="section-label reveal">What I Offer</p>
+  <h2 class="section-title reveal">Creative <em>Services</em></h2>
+  <p class="section-desc reveal">From initial concept to final delivery — professional artwork tailored to your vision.</p>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon mint">🖌️</div>
+      <h3 class="service-title">Digital Illustration</h3>
+      <p class="service-desc">Detailed 2D illustrations for editorial, publishing, branding, and personal projects. Clean lines, vibrant color, distinctive style.</p>
+      <span class="service-price">Starting from $150</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon lavender">🎭</div>
+      <h3 class="service-title">Concept Art</h3>
+      <p class="service-desc">Character concepts, creature designs, and environment art for games, films, and animation studios. Exploration to polished sheets.</p>
+      <span class="service-price">Starting from $200</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon rose">🖼️</div>
+      <h3 class="service-title">Digital Painting</h3>
+      <p class="service-desc">Atmospheric portraits, scenes, and compositions with rich texture and painterly depth. From sketches to fully rendered pieces.</p>
+      <span class="service-price">Starting from $180</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon mint">✏️</div>
+      <h3 class="service-title">Traditional Art</h3>
+      <p class="service-desc">Pencil, ink, and mixed-media originals. Hand-crafted artwork with unique tactile quality — shipped or digitally scanned.</p>
+      <span class="service-price">Starting from $120</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon lavender">🔮</div>
+      <h3 class="service-title">3D Visualization</h3>
+      <p class="service-desc">Product renders, character models, and environment visualizations. Clean, stylized 3D complementing illustration projects.</p>
+      <span class="service-price">Starting from $250</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon rose">🎨</div>
+      <h3 class="service-title">Brand Identity Art</h3>
+      <p class="service-desc">Custom illustrated logos, mascots, and visual identity systems that set your brand apart with original artistry.</p>
+      <span class="service-price">Starting from $300</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HIRE / PROJECT REQUEST ────────────────────────────────────── -->
+<section id="hire">
+  <p class="section-label reveal">Work Together</p>
+  <h2 class="section-title reveal">Start a <em>Project</em></h2>
+
+  <div class="hire-wrap reveal">
+    <div class="hire-grid">
+      <div>
+        <h3 style="font-family: var(--font-display); font-size:24px; font-weight:300; margin-bottom:24px; color: var(--text);">Tell me about your project</h3>
+        <form id="project-form" onsubmit="submitProject(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="p-name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" id="p-email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Company / Studio</label>
+              <input type="text" id="p-company" placeholder="Optional" />
+            </div>
+            <div class="form-group">
+              <label>Phone / WhatsApp</label>
+              <input type="tel" id="p-phone" placeholder="+1 (000) 000-0000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Project Type *</label>
+            <select id="p-type" required>
+              <option value="">Select a service...</option>
+              <option>2D Digital Illustration</option>
+              <option>Concept Art</option>
+              <option>Digital Painting</option>
+              <option>Traditional Artwork</option>
+              <option>3D Visualization</option>
+              <option>Brand Identity Art</option>
+              <option>Other / Custom</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Project Brief *</label>
+            <textarea id="p-brief" placeholder="Describe your project — style, mood, references, deadline..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Budget Range</label>
+            <select id="p-budget">
+              <option value="">Not specified</option>
+              <option>Under $200</option>
+              <option>$200 – $500</option>
+              <option>$500 – $1,000</option>
+              <option>$1,000 – $3,000</option>
+              <option>$3,000+</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%; padding:15px; font-size:15px; margin-top:8px;">Submit Project Request →</button>
+        </form>
+      </div>
+
+      <div>
+        <h3 style="font-family: var(--font-display); font-size:24px; font-weight:300; margin-bottom:24px;">Payment Methods</h3>
+        <p style="color: var(--text-dim); font-size:13px; line-height:1.7; margin-bottom:24px;">
+          A 50% deposit is required to begin work. Final payment upon delivery. I accept multiple payment methods for your convenience.
+        </p>
+
+        <div class="form-group">
+          <label>Select Payment Method</label>
+          <div class="payment-methods">
+            <label class="payment-option">
+              <input type="radio" name="payment" value="paypal" checked />
+              <div class="pay-icon">💳</div>
+              <div class="pay-label">PayPal</div>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="payment" value="wise" />
+              <div class="pay-icon">🏦</div>
+              <div class="pay-label">Wise</div>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="payment" value="crypto" />
+              <div class="pay-icon">₿</div>
+              <div class="pay-label">Crypto</div>
+            </label>
+          </div>
+        </div>
+
+        <div style="background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-top:20px;">
+          <h4 style="font-family: var(--font-display); font-size:17px; font-weight:400; margin-bottom:12px;">Process</h4>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <span style="width:24px; height:24px; border-radius:50%; background:rgba(168,230,207,0.1); border:1px solid rgba(168,230,207,0.2); display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--mint); font-family:var(--font-mono); flex-shrink:0;">1</span>
+              <div><span style="font-size:13px; font-weight:500;">Submit Brief</span><br/><span style="font-size:12px; color:var(--text-dim);">Fill out the project form with details</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <span style="width:24px; height:24px; border-radius:50%; background:rgba(168,230,207,0.1); border:1px solid rgba(168,230,207,0.2); display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--mint); font-family:var(--font-mono); flex-shrink:0;">2</span>
+              <div><span style="font-size:13px; font-weight:500;">Quote & Timeline</span><br/><span style="font-size:12px; color:var(--text-dim);">I respond within 24–48 hours</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <span style="width:24px; height:24px; border-radius:50%; background:rgba(168,230,207,0.1); border:1px solid rgba(168,230,207,0.2); display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--mint); font-family:var(--font-mono); flex-shrink:0;">3</span>
+              <div><span style="font-size:13px; font-weight:500;">Deposit & Begin</span><br/><span style="font-size:12px; color:var(--text-dim);">50% upfront, work starts immediately</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <span style="width:24px; height:24px; border-radius:50%; background:rgba(168,230,207,0.1); border:1px solid rgba(168,230,207,0.2); display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--mint); font-family:var(--font-mono); flex-shrink:0;">4</span>
+              <div><span style="font-size:13px; font-weight:500;">Revisions & Delivery</span><br/><span style="font-size:12px; color:var(--text-dim);">2 revisions included, final files delivered</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT / REGISTER ─────────────────────────────────────────── -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-info reveal">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Let's <em>connect</em></h2>
+      <p>Open for freelance projects, collaborations, and creative conversations. Whether you have a brief project or a long-term vision, I'd love to hear from you.</p>
+      <div class="social-links">
+        <a href="#" class="social-link" title="Instagram">📷</a>
+        <a href="#" class="social-link" title="Behance">🎨</a>
+        <a href="#" class="social-link" title="ArtStation">🖼️</a>
+        <a href="#" class="social-link" title="LinkedIn">💼</a>
+        <a href="#" class="social-link" title="Twitter">🐦</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 32px;">
+        <h3 style="font-family: var(--font-display); font-size:22px; font-weight:300; margin-bottom:6px;">Stay Connected</h3>
+        <p style="color: var(--text-dim); font-size:13px; margin-bottom:24px;">Register to get updates on new work and availability.</p>
+        <form id="register-form" onsubmit="submitRegister(event)">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="r-name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label>Gmail Address *</label>
+            <input type="email" id="r-email" placeholder="yourname@gmail.com" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="r-phone" placeholder="+1 (000) 000-0000" />
+          </div>
+          <div class="form-group">
+            <label>How did you find me?</label>
+            <select id="r-source">
+              <option value="">Select...</option>
+              <option>Google Search</option>
+              <option>Instagram</option>
+              <option>Behance</option>
+              <option>ArtStation</option>
+              <option>Referral</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%; padding:14px; font-size:14px;">Register Now →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">A M I N</div>
+  <span class="footer-copy">© 2025 Amin Portfolio. All rights reserved. Unauthorized reproduction prohibited.</span>
+  <button class="footer-admin-trigger" onclick="openAdmin()">⚙ Admin</button>
+</footer>
+
+<!-- ─── LIGHTBOX ──────────────────────────────────────────────────── -->
+<div id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <div style="position:relative; display:inline-block;">
+    <img id="lightbox-img" src="" alt="" class="lightbox-img" />
+    <div class="lightbox-watermark">© AMIN PORTFOLIO — ALL RIGHTS RESERVED</div>
+  </div>
+  <div class="lightbox-info">
+    <div class="lightbox-title" id="lightbox-title"></div>
+    <div class="lightbox-cat" id="lightbox-cat"></div>
+  </div>
+</div>
+
+<!-- ─── CHAT WIDGET ────────────────────────────────────────────────── -->
+<div id="chat-fab">
+  <div class="chat-badge" id="chat-badge">1</div>
+  <button class="chat-toggle" onclick="toggleChat()" title="Chat with AI Assistant">💬</button>
+</div>
+
+<div id="chat-window" class="hidden">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖</div>
+    <div>
+      <div class="chat-name">Studio Assistant</div>
+      <div class="chat-status">● Online · AI Powered</div>
+    </div>
+    <button onclick="toggleChat()" style="margin-left:auto; background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:18px; padding:4px;">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg bot">👋 Hello! I'm the studio assistant for Amin's portfolio. I can answer questions about services, pricing, availability, and project inquiries. How can I help you today?</div>
+  </div>
+  <div class="chat-input-wrap">
+    <input type="text" id="chat-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter') sendMessage()" />
+    <button class="chat-send" onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+<!-- ─── TOAST ───────────────────────────────────────────────────────── -->
+<div id="toast">
+  <span class="t-icon"></span>
+  <span class="t-msg" id="toast-msg"></span>
+</div>
+
+<!-- ─── ADMIN OVERLAY ──────────────────────────────────────────────── -->
+<div id="admin-overlay">
+  <!-- LOGIN PANEL -->
+  <div class="admin-login" id="admin-login">
+    <h2>Admin Access</h2>
+    <p>Enter your credentials to manage the portfolio</p>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="admin-user" placeholder="Username" onkeydown="if(event.key==='Enter') adminLogin()" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="admin-pass" placeholder="Password" onkeydown="if(event.key==='Enter') adminLogin()" />
+    </div>
+    <button class="btn-primary" style="width:100%; padding:14px; margin-top:8px;" onclick="adminLogin()">Sign In →</button>
+    <button onclick="closeAdmin()" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:13px; margin-top:16px; display:block; width:100%;">Cancel</button>
+    <p id="login-error" style="color: var(--rose); font-size:12px; margin-top:12px; display:none;">Invalid credentials. Try again.</p>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="admin-panel" id="admin-panel">
+    <div class="admin-header">
+      <span class="admin-title">Portfolio Admin</span>
+      <div style="display:flex; gap:10px;">
+        <span id="admin-notif-count" style="font-family:var(--font-mono); font-size:12px; color:var(--rose)"></span>
+        <button onclick="closeAdmin()" style="background:transparent; border:1px solid var(--border2); color:var(--text-dim); padding:7px 16px; border-radius:50px; cursor:pointer; font-size:13px;">Close</button>
+      </div>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchTab('projects', this)">📁 Projects</button>
+      <button class="admin-tab" onclick="switchTab('upload', this)">⬆️ Upload</button>
+      <button class="admin-tab" onclick="switchTab('requests', this)">📋 Requests</button>
+      <button class="admin-tab" onclick="switchTab('contacts', this)">👥 Contacts</button>
+      <button class="admin-tab" onclick="switchTab('settings', this)">⚙️ Settings</button>
+    </div>
+    <div class="admin-content">
+
+      <!-- PROJECTS TAB -->
+      <div class="tab-panel active" id="tab-projects">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <h3 style="font-family:var(--font-display); font-size:20px; font-weight:300;">Portfolio Items</h3>
+          <button class="btn-primary" onclick="switchTab('upload', document.querySelector('[onclick*=\"upload\"]'))">+ Add New</button>
+        </div>
+        <table class="admin-table">
+          <thead>
+            <tr><th>Title</th><th>Category</th><th>Year</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="projects-table-body">
+            <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px; font-size:13px;">No projects yet. Upload your first work.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- UPLOAD TAB -->
+      <div class="tab-panel" id="tab-upload">
+        <h3 style="font-family:var(--font-display); font-size:20px; font-weight:300; margin-bottom:24px;">Upload New Work</h3>
+        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+          <div class="upload-icon">🎨</div>
+          <h4>Drop your artwork here</h4>
+          <p>Or click to browse — JPG, PNG, GIF, WebP, MP4, GLB (max 20MB)</p>
+        </div>
+        <input type="file" id="file-input" style="display:none" accept="image/*,video/mp4,.glb,.gltf" onchange="handleFileSelect(event)" />
+        <div id="upload-preview" style="display:none; margin-bottom:24px;">
+          <img id="preview-img" style="width:100%; max-height:260px; object-fit:cover; border-radius:var(--radius); margin-bottom:16px; pointer-events:none;" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Title *</label>
+            <input type="text" id="up-title" placeholder="Artwork title" />
+          </div>
+          <div class="form-group">
+            <label>Year *</label>
+            <input type="number" id="up-year" placeholder="2025" value="2025" min="2000" max="2030" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="up-cat">
+              <option value="2d">2D Digital</option>
+              <option value="painting">Digital Painting</option>
+              <option value="3d">3D / CGI</option>
+              <option value="traditional">Traditional</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="up-status">
+              <option value="published">Published</option>
+              <option value="pending">Draft</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="up-desc" placeholder="Describe the artwork, techniques used, inspiration..." style="min-height:80px;"></textarea>
+        </div>
+        <button class="btn-primary" style="padding:13px 32px;" onclick="saveProject()">Publish Artwork →</button>
+      </div>
+
+      <!-- REQUESTS TAB -->
+      <div class="tab-panel" id="tab-requests">
+        <h3 style="font-family:var(--font-display); font-size:20px; font-weight:300; margin-bottom:20px;">Project Requests</h3>
+        <table class="admin-table">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Type</th><th>Budget</th><th>Date</th><th>Status</th></tr>
+          </thead>
+          <tbody id="requests-table-body">
+            <tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:30px; font-size:13px;">No requests yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CONTACTS TAB -->
+      <div class="tab-panel" id="tab-contacts">
+        <h3 style="font-family:var(--font-display); font-size:20px; font-weight:300; margin-bottom:20px;">Registered Contacts</h3>
+        <table class="admin-table">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Phone</th><th>Source</th><th>Date</th></tr>
+          </thead>
+          <tbody id="contacts-table-body">
+            <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px; font-size:13px;">No contacts yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div class="tab-panel" id="tab-settings">
+        <h3 style="font-family:var(--font-display); font-size:20px; font-weight:300; margin-bottom:24px;">Site Settings</h3>
+        <div class="form-group">
+          <label>Artist Name</label>
+          <input type="text" id="s-name" value="AMIN" oninput="updateSetting('artistName', this.value)" />
+        </div>
+        <div class="form-group">
+          <label>Tagline</label>
+          <input type="text" id="s-tagline" value="Digital Artist · Visual Designer · Illustrator" oninput="updateSetting('tagline', this.value)" />
+        </div>
+        <div class="form-group">
+          <label>Contact Email</label>
+          <input type="email" id="s-email" placeholder="your@email.com" oninput="updateSetting('email', this.value)" />
+        </div>
+        <div class="form-group">
+          <label>AI Chat API Key (Anthropic)</label>
+          <input type="password" id="s-apikey" placeholder="sk-ant-..." oninput="updateSetting('apiKey', this.value)" />
+        </div>
+        <div class="form-group">
+          <label>New Admin Password</label>
+          <input type="password" id="s-newpass" placeholder="Leave blank to keep current" />
+        </div>
+        <button class="btn-primary" style="padding:12px 28px;" onclick="saveSettings()">Save Settings →</button>
+        <div style="margin-top:36px; padding-top:24px; border-top:1px solid var(--border);">
+          <h4 style="font-family:var(--font-display); font-size:18px; font-weight:300; margin-bottom:12px; color:var(--rose);">Danger Zone</h4>
+          <button onclick="clearAllData()" style="background:rgba(255,179,198,0.08); border:1px solid rgba(255,179,198,0.2); color:var(--rose); padding:10px 22px; border-radius:var(--radius); cursor:pointer; font-size:13px;">Clear All Data</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ─── JAVASCRIPT ──────────────────────────────────────────────────── -->
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   SECURITY LAYER
+═══════════════════════════════════════════════════════════════════ */
+
+// Disable right-click context menu
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Disable keyboard shortcuts for screenshots / devtools / save
+document.addEventListener('keydown', e => {
+  // F12, Ctrl+Shift+I/J/C/U, Ctrl+S, Ctrl+U, PrintScreen
+  if (
+    e.key === 'F12' ||
+    e.key === 'PrintScreen' ||
+    (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) ||
+    (e.ctrlKey && ['s','u','S','U','p','P'].includes(e.key)) ||
+    (e.metaKey && e.shiftKey && ['I','J','C'].includes(e.key)) ||
+    (e.metaKey && ['s','u','S','U','p','P'].includes(e.key))
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+});
+
+// Detect devtools open (simple heuristic)
+let devtoolsOpen = false;
+const devDetect = () => {
+  const threshold = 160;
+  const check = () => {
+    if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+      if (!devtoolsOpen) {
+        devtoolsOpen = true;
+        document.body.innerHTML = '<div style="height:100vh;display:flex;align-items:center;justify-content:center;font-family:monospace;color:#A8E6CF;font-size:18px;background:#0A0A0C;flex-direction:column;gap:12px;"><span style="font-size:40px;">⚠️</span><span>Unauthorized access detected.</span><span style="font-size:12px;color:#4A4859;">Close DevTools to continue.</span></div>';
+      }
+    } else {
+      if (devtoolsOpen) { location.reload(); }
+    }
+  };
+  setInterval(check, 1000);
+};
+devDetect();
+
+// Disable drag on all images
+document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+
+// CSS will-change print trick to reduce screenshot clarity (best effort)
+const printGuard = document.createElement('style');
+printGuard.textContent = `@media print { body { display: none !important; } }`;
+document.head.appendChild(printGuard);
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO CANVAS — Reactive Particle Constellation
+═══════════════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouse = { x: W / 2, y: H / 2 };
+
+  const MINT = [168, 230, 207];
+  const LAV = [201, 177, 255];
+  const N = 90;
+
+  function resize() {
+    W = canvas.width = canvas.parentElement.offsetWidth;
+    H = canvas.height = canvas.parentElement.offsetHeight;
+  }
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function createParticle() {
+    const x = Math.random() * W;
+    const y = Math.random() * H;
+    return {
+      x, y,
+      ox: x, oy: y,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.5,
+      c: Math.random() < 0.5 ? MINT : LAV,
+      a: Math.random() * 0.5 + 0.2
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: N }, createParticle);
+  }
+
+  window.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+
+      const dx = mouse.x - p.x, dy = mouse.y - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 150) {
+        const force = (150 - dist) / 150;
+        p.x -= dx * force * 0.02;
+        p.y -= dy * force * 0.02;
+      }
+    });
+
+    // Lines between close particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dist = Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(168,230,207,${(1 - dist / 120) * 0.12})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Particles
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.c.join(',')},${p.a})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  init();
+  draw();
+  window.addEventListener('resize', init);
+})();
+
+/* ═══════════════════════════════════════════════════════════════════
+   DATA STORE (localStorage-based persistence)
+═══════════════════════════════════════════════════════════════════ */
+const DB = {
+  get(key, def = null) {
+    try { return JSON.parse(localStorage.getItem('amin_' + key)) ?? def; } catch { return def; }
+  },
+  set(key, val) {
+    try { localStorage.setItem('amin_' + key, JSON.stringify(val)); } catch {}
+  }
+};
+
+// Admin credentials (stored hashed)
+const ADMIN_USER = 'admin';
+const ADMIN_PASS_HASH = DB.get('adminPass') || btoa('amin2025!');
+
+/* ═══════════════════════════════════════════════════════════════════
+   PORTFOLIO
+═══════════════════════════════════════════════════════════════════ */
+let currentFilter = 'all';
+
+function getProjects() { return DB.get('projects', []); }
+function saveProjects(p) { DB.set('projects', p); }
+
+function renderPortfolio(filter = 'all') {
+  const grid = document.getElementById('portfolio-grid');
+  const projects = getProjects().filter(p => p.status === 'published');
+  const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+
+  document.getElementById('projects-count').textContent = projects.length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--text-muted);">
+        <div style="font-size:48px; margin-bottom:16px;">🎨</div>
+        <div style="font-family:var(--font-display); font-size:22px; margin-bottom:8px; font-weight:300;">No artwork yet</div>
+        <div style="font-size:13px;">Upload your first work from the Admin Panel</div>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((p, i) => `
+    <div class="portfolio-card reveal" onclick="openLightbox(${getProjects().indexOf(p)})" style="animation-delay:${i * 0.08}s">
+      <div class="card-img-wrap">
+        <div class="card-protect"></div>
+        ${p.imageData
+          ? `<img src="${p.imageData}" alt="" loading="lazy" />`
+          : `<div class="card-placeholder"><span style="font-size:36px;">🖼️</span><span style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em;">${p.category.toUpperCase()}</span></div>`
+        }
+        <span class="card-tag">${catLabel(p.category)}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${esc(p.title)}</div>
+        <div class="card-desc">${esc(p.description || '')}</div>
+        <div class="card-footer">
+          <span class="card-year">${p.year}</span>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  observeReveal();
+}
+
+function catLabel(c) {
+  return { '2d': '2D Digital', 'painting': 'Painting', '3d': '3D / CGI', 'traditional': 'Traditional' }[c] || c;
+}
+
+function filterPortfolio(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPortfolio(cat);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIGHTBOX
+═══════════════════════════════════════════════════════════════════ */
+function openLightbox(idx) {
+  const p = getProjects()[idx];
+  if (!p) return;
+  document.getElementById('lightbox-img').src = p.imageData || '';
+  document.getElementById('lightbox-title').textContent = p.title;
+  document.getElementById('lightbox-cat').textContent = catLabel(p.category) + ' · ' + p.year;
+  document.getElementById('lightbox').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+/* ═══════════════════════════════════════════════════════════════════
+   PROJECT FORM
+═══════════════════════════════════════════════════════════════════ */
+function submitProject(e) {
+  e.preventDefault();
+  const req = {
+    name: v('p-name'), email: v('p-email'),
+    company: v('p-company'), phone: v('p-phone'),
+    type: v('p-type'), brief: v('p-brief'),
+    budget: v('p-budget'), date: new Date().toLocaleDateString(),
+    status: 'new',
+    payment: document.querySelector('input[name="payment"]:checked')?.value || 'paypal'
+  };
+  const reqs = DB.get('requests', []);
+  reqs.unshift(req);
+  DB.set('requests', reqs);
+  showToast('success', '🎉 Project request sent! I\'ll be in touch within 48 hours.');
+  document.getElementById('project-form').reset();
+  sendNotification('New Project Request', `${req.name} submitted a project request: ${req.type}`);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   REGISTER FORM
+═══════════════════════════════════════════════════════════════════ */
+function submitRegister(e) {
+  e.preventDefault();
+  const contact = {
+    name: v('r-name'), email: v('r-email'),
+    phone: v('r-phone'), source: v('r-source'),
+    date: new Date().toLocaleDateString()
+  };
+  const contacts = DB.get('contacts', []);
+  if (contacts.some(c => c.email === contact.email)) {
+    showToast('info', 'You\'re already registered. Thank you!');
+    return;
+  }
+  contacts.unshift(contact);
+  DB.set('contacts', contacts);
+  showToast('success', '✅ You\'re registered! You\'ll receive updates on new work.');
+  document.getElementById('register-form').reset();
+  sendNotification('New Contact', `${contact.name} registered via portfolio.`);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NOTIFICATIONS (Web Push / Browser Notification API)
+═══════════════════════════════════════════════════════════════════ */
+function sendNotification(title, body) {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') {
+    new Notification('🎨 ' + title, { body, icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎨</text></svg>' });
+  } else if (Notification.permission !== 'denied') {
+    Notification.requestPermission().then(p => {
+      if (p === 'granted') new Notification('🎨 ' + title, { body });
+    });
+  }
+}
+
+// Request notification permission on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, 4000);
+});
+
+/* ═══════════════════════════════════════════════════════════════════
+   AI CHAT (Anthropic API / Claude)
+═══════════════════════════════════════════════════════════════════ */
+const chatMessages = [];
+let chatOpen = false;
+
+const SYSTEM_PROMPT = `You are a helpful and professional AI assistant for a digital art portfolio website. The artist's name is Amin, a digital artist specializing in 2D illustration, concept art, digital painting, traditional art, and occasional 3D work. 
+
+When answering:
+- Be concise, warm, and professional
+- Answer questions about services, pricing, process, availability
+- For project requests, encourage users to fill out the project form
+- For payments, mention PayPal, Wise, and Crypto are accepted
+- If asked about custom prices, say to contact via form
+- Keep responses under 150 words
+- Do not discuss competitors or negative topics
+- Speak in a professional creative studio tone`;
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  appendMsg(msg, 'user');
+  input.value = '';
+
+  chatMessages.push({ role: 'user', content: msg });
+
+  // Show typing
+  const typingEl = addTyping();
+
+  const apiKey = DB.get('apiKey', '');
+
+  if (!apiKey) {
+    // Offline fallback responses
+    setTimeout(() => {
+      typingEl.remove();
+      const reply = offlineFallback(msg);
+      appendMsg(reply, 'bot');
+      chatMessages.push({ role: 'assistant', content: reply });
+    }, 900);
+    return;
+  }
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        system: SYSTEM_PROMPT,
+        messages: chatMessages.slice(-10)
+      })
+    });
+    const data = await res.json();
+    typingEl.remove();
+    const reply = data.content?.[0]?.text || 'Sorry, I had trouble connecting. Please try again.';
+    appendMsg(reply, 'bot');
+    chatMessages.push({ role: 'assistant', content: reply });
+  } catch {
+    typingEl.remove();
+    appendMsg('I\'m having connectivity issues. Please try again or use the project form.', 'bot');
+  }
+}
+
+function offlineFallback(msg) {
+  const m = msg.toLowerCase();
+  if (m.includes('price') || m.includes('cost') || m.includes('how much')) {
+    return '💰 Prices start from $120 for traditional art, $150 for digital illustration, $200 for concept art, and $250 for 3D work. Custom quotes via the project form!';
+  }
+  if (m.includes('available') || m.includes('free') || m.includes('slot')) {
+    return '📅 I\'m currently accepting new projects! Fill out the project form with your brief and I\'ll respond within 48 hours with availability.';
+  }
+  if (m.includes('pay') || m.includes('payment')) {
+    return '💳 I accept PayPal, Wise, and Crypto. A 50% deposit is required to begin, with the balance due on delivery.';
+  }
+  if (m.includes('time') || m.includes('deadline') || m.includes('long')) {
+    return '⏱ Timelines depend on complexity: simple illustrations 3–5 days, detailed pieces 1–2 weeks, concept art packages 2–3 weeks. Rush delivery available.';
+  }
+  if (m.includes('revision') || m.includes('change')) {
+    return '🔄 Every project includes 2 rounds of revisions. Additional revisions are available at an hourly rate.';
+  }
+  if (m.includes('hello') || m.includes('hi') || m.includes('hey')) {
+    return '👋 Hello! I\'m Amin\'s studio assistant. I can help with questions about services, pricing, or project inquiries. What can I help you with?';
+  }
+  return '🎨 Great question! For the most accurate answer, I\'d recommend filling out the project form or browsing the Services section. Is there anything specific I can help clarify?';
+}
+
+function appendMsg(text, who) {
+  const wrap = document.getElementById('chat-messages');
+  const el = document.createElement('div');
+  el.className = `msg ${who}`;
+  el.textContent = text;
+  wrap.appendChild(el);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function addTyping() {
+  const wrap = document.getElementById('chat-messages');
+  const el = document.createElement('div');
+  el.className = 'msg bot msg-typing';
+  el.innerHTML = '<span></span><span></span><span></span>';
+  wrap.appendChild(el);
+  wrap.scrollTop = wrap.scrollHeight;
+  return el;
+}
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chat-window').classList.toggle('hidden', !chatOpen);
+  if (chatOpen) {
+    document.getElementById('chat-badge').style.display = 'none';
+    document.getElementById('chat-input').focus();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ADMIN PANEL
+═══════════════════════════════════════════════════════════════════ */
+let adminAuthenticated = false;
+let loginAttempts = 0;
+const MAX_ATTEMPTS = 5;
+
+function openAdmin() {
+  document.getElementById('admin-overlay').classList.add('visible');
+  if (!adminAuthenticated) {
+    document.getElementById('admin-login').style.display = 'block';
+    document.getElementById('admin-panel').classList.remove('active');
+    setTimeout(() => document.getElementById('admin-user').focus(), 100);
+  } else {
+    showAdminPanel();
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('admin-overlay').classList.remove('visible');
+}
+
+function adminLogin() {
+  if (loginAttempts >= MAX_ATTEMPTS) {
+    showToast('error', 'Too many attempts. Reload to try again.');
+    return;
+  }
+  const user = document.getElementById('admin-user').value.trim();
+  const pass = document.getElementById('admin-pass').value;
+  const passHash = DB.get('adminPass') || ADMIN_PASS_HASH;
+
+  if (user === ADMIN_USER && btoa(pass) === passHash) {
+    adminAuthenticated = true;
+    loginAttempts = 0;
+    showAdminPanel();
+  } else {
+    loginAttempts++;
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('admin-pass').value = '';
+    // Lock after max attempts
+    if (loginAttempts >= MAX_ATTEMPTS) {
+      document.getElementById('login-error').textContent = `Locked. Too many failed attempts.`;
+    }
+  }
+}
+
+function showAdminPanel() {
+  document.getElementById('admin-login').style.display = 'none';
+  document.getElementById('admin-panel').classList.add('active');
+  loadAdminData();
+  updateNotifCount();
+}
+
+function loadAdminData() {
+  renderProjectsTable();
+  renderRequestsTable();
+  renderContactsTable();
+}
+
+function updateNotifCount() {
+  const reqs = DB.get('requests', []).filter(r => r.status === 'new').length;
+  const el = document.getElementById('admin-notif-count');
+  el.textContent = reqs > 0 ? `${reqs} new request${reqs > 1 ? 's' : ''}` : '';
+}
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+function renderProjectsTable() {
+  const projects = getProjects();
+  const tbody = document.getElementById('projects-table-body');
+  if (!projects.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px; font-size:13px;">No projects yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = projects.map((p, i) => `
+    <tr>
+      <td style="color:var(--text); font-weight:500;">${esc(p.title)}</td>
+      <td>${catLabel(p.category)}</td>
+      <td>${p.year}</td>
+      <td><span class="status-badge ${p.status}">${p.status}</span></td>
+      <td>
+        <button onclick="togglePublish(${i})" style="background:transparent; border:1px solid var(--border); color:var(--text-dim); padding:4px 12px; border-radius:50px; cursor:pointer; font-size:11px; margin-right:6px;">${p.status === 'published' ? 'Unpublish' : 'Publish'}</button>
+        <button onclick="deleteProject(${i})" style="background:transparent; border:1px solid rgba(255,179,198,0.2); color:var(--rose); padding:4px 12px; border-radius:50px; cursor:pointer; font-size:11px;">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderRequestsTable() {
+  const reqs = DB.get('requests', []);
+  const tbody = document.getElementById('requests-table-body');
+  if (!reqs.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:30px; font-size:13px;">No requests yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = reqs.map((r, i) => `
+    <tr>
+      <td style="color:var(--text);">${esc(r.name)}</td>
+      <td style="font-family:var(--font-mono); font-size:11px;">${esc(r.email)}</td>
+      <td>${esc(r.type)}</td>
+      <td>${esc(r.budget || '—')}</td>
+      <td style="font-family:var(--font-mono); font-size:11px;">${r.date}</td>
+      <td>
+        <span class="status-badge ${r.status === 'new' ? 'new' : 'pending'}">${r.status}</span>
+        ${r.status === 'new' ? `<button onclick="markRequestRead(${i})" style="background:transparent; border:1px solid var(--border); color:var(--text-muted); padding:3px 10px; border-radius:50px; cursor:pointer; font-size:10px; margin-left:6px;">Mark Read</button>` : ''}
+      </td>
+    </tr>
+  `).join('');
+}
+
+function markRequestRead(i) {
+  const reqs = DB.get('requests', []);
+  reqs[i].status = 'read';
+  DB.set('requests', reqs);
+  renderRequestsTable();
+  updateNotifCount();
+}
+
+function renderContactsTable() {
+  const contacts = DB.get('contacts', []);
+  const tbody = document.getElementById('contacts-table-body');
+  if (!contacts.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px; font-size:13px;">No contacts yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = contacts.map(c => `
+    <tr>
+      <td style="color:var(--text);">${esc(c.name)}</td>
+      <td style="font-family:var(--font-mono); font-size:11px;">${esc(c.email)}</td>
+      <td style="font-family:var(--font-mono); font-size:11px;">${esc(c.phone || '—')}</td>
+      <td>${esc(c.source || '—')}</td>
+      <td style="font-family:var(--font-mono); font-size:11px;">${c.date}</td>
+    </tr>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FILE UPLOAD
+═══════════════════════════════════════════════════════════════════ */
+let pendingFile = null;
+
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.add('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) processFile(file);
+}
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) processFile(file);
+}
+
+function processFile(file) {
+  if (file.size > 20 * 1024 * 1024) {
+    showToast('error', 'File too large. Maximum 20MB.');
+    return;
+  }
+  pendingFile = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const preview = document.getElementById('upload-preview');
+    const img = document.getElementById('preview-img');
+    if (file.type.startsWith('image/')) {
+      img.src = e.target.result;
+      preview.style.display = 'block';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProject() {
+  const title = v('up-title');
+  if (!title) { showToast('error', 'Please enter a title.'); return; }
+
+  const project = {
+    title,
+    year: parseInt(v('up-year')) || new Date().getFullYear(),
+    category: v('up-cat'),
+    status: v('up-status'),
+    description: v('up-desc'),
+    imageData: pendingFile ? document.getElementById('preview-img').src : null,
+    createdAt: Date.now()
+  };
+
+  const projects = getProjects();
+  projects.unshift(project);
+  saveProjects(projects);
+
+  // Reset
+  pendingFile = null;
+  document.getElementById('up-title').value = '';
+  document.getElementById('up-desc').value = '';
+  document.getElementById('upload-preview').style.display = 'none';
+  document.getElementById('file-input').value = '';
+
+  renderProjectsTable();
+  renderPortfolio(currentFilter);
+  showToast('success', `"${title}" added to portfolio!`);
+  switchTab('projects', null);
+  sendNotification('Portfolio Updated', `New work added: "${title}"`);
+}
+
+function togglePublish(i) {
+  const projects = getProjects();
+  projects[i].status = projects[i].status === 'published' ? 'pending' : 'published';
+  saveProjects(projects);
+  renderProjectsTable();
+  renderPortfolio(currentFilter);
+}
+
+function deleteProject(i) {
+  if (!confirm('Delete this project?')) return;
+  const projects = getProjects();
+  projects.splice(i, 1);
+  saveProjects(projects);
+  renderProjectsTable();
+  renderPortfolio(currentFilter);
+  showToast('info', 'Project deleted.');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SETTINGS
+═══════════════════════════════════════════════════════════════════ */
+function updateSetting(key, value) {
+  const settings = DB.get('settings', {});
+  settings[key] = value;
+  DB.set('settings', settings);
+}
+
+function saveSettings() {
+  const newPass = document.getElementById('s-newpass').value;
+  if (newPass) {
+    DB.set('adminPass', btoa(newPass));
+    document.getElementById('s-newpass').value = '';
+    showToast('success', 'Settings saved. New password set.');
+  } else {
+    showToast('success', 'Settings saved successfully.');
+  }
+}
+
+function clearAllData() {
+  if (!confirm('This will delete all projects, requests, and contacts. Are you sure?')) return;
+  ['projects', 'requests', 'contacts', 'settings'].forEach(k => localStorage.removeItem('amin_' + k));
+  renderPortfolio();
+  renderProjectsTable();
+  renderRequestsTable();
+  renderContactsTable();
+  showToast('info', 'All data cleared.');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════════════════════════ */
+let toastTimer;
+function showToast(type, msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.className = `show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 4500);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   REVEAL ANIMATIONS (Intersection Observer)
+═══════════════════════════════════════════════════════════════════ */
+let revealObserver;
+function observeReveal() {
+  if (revealObserver) revealObserver.disconnect();
+  revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════════════════ */
+function v(id) { return document.getElementById(id)?.value?.trim() || ''; }
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  renderPortfolio();
+  observeReveal();
+
+  // Close admin on overlay click
+  document.getElementById('admin-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeAdmin();
+  });
+
+  // Load saved settings
+  const settings = DB.get('settings', {});
+  if (settings.artistName) document.querySelector('.nav-logo').textContent = settings.artistName;
+  if (settings.apiKey) document.getElementById('s-apikey').value = settings.apiKey;
+  if (settings.email) document.getElementById('s-email').value = settings.email;
+
+  // Animate projects count
+  const target = getProjects().filter(p => p.status === 'published').length;
+  let count = 0;
+  const counter = setInterval(() => {
+    count = Math.min(count + 1, target);
+    document.getElementById('projects-count').textContent = count;
+    if (count >= target) clearInterval(counter);
+  }, 60);
+});
+</script>
+</body>
+</html>
