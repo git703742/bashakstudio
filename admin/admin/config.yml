@@ -1,18 +1,31 @@
 backend:
-  name: test-repo
+  name: github
+  repo: git703742/bashakstudio
+  branch: main
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "pages"
-    label: "Pages"
+  - name: "settings"
+    label: "تنظیمات سایت"
 
     files:
-      - file: "content/site.yml"
-        label: "Site Settings"
+      - label: "اطلاعات اصلی"
         name: "site"
+        file: "content/site.yml"
 
         fields:
-          - {label: "Name", name: "name", widget: "string"}
-          - {label: "Bio", name: "bio", widget: "text"}
+          - { label: "نام", name: "name", widget: "string" }
+          - { label: "توضیحات", name: "bio", widget: "text" }
+
+  - name: "projects"
+    label: "پروژه ها"
+
+    folder: "content/projects"
+    create: true
+
+    fields:
+      - { label: "عنوان", name: "title", widget: "string" }
+      - { label: "عکس", name: "image", widget: "image" }
+      - { label: "توضیح", name: "description", widget: "text" }
