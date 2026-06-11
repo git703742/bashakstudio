@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>پرتفولیو | نام شما</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────── TOKENS ─────────── */
+    :root {
+      --bg:        #0A0A0F;
+      --surface:   #12121A;
+      --border:    #1E1E2E;
+      --accent:    #7B61FF;
+      --accent2:   #C084FC;
+      --glow:      rgba(123,97,255,0.35);
+      --text:      #F0EFF5;
+      --muted:     #8888A8;
+      --card-bg:   #13131E;
+      --r:         16px;
+    }
+
+    /* ─────────── RESET ─────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Vazirmatn', 'Inter', sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ─────────── SCROLLBAR ─────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ─────────── NOISE OVERLAY ─────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .4;
+    }
+
+    /* ─────────── NAV ─────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 5vw;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -.5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-size: .9rem;
+      color: var(--muted);
+      letter-spacing: .02em;
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; right: 0;
+      width: 0; height: 1.5px;
+      background: var(--accent);
+      transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      padding: .5rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid var(--accent);
+      color: var(--accent) !important;
+      font-size: .88rem;
+      transition: background .2s, color .2s !important;
+    }
+    .nav-cta:hover { background: var(--accent); color: var(--bg) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* ─────────── HERO ─────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 5vw 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    /* animated gradient orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .18;
+      animation: float 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--accent); top: -10%; right: -5%; animation-delay: 0s; }
+    .orb-2 { width: 350px; height: 350px; background: #C084FC; bottom: 5%; left: -5%; animation-delay: -4s; }
+    .orb-3 { width: 250px; height: 250px; background: #38BDF8; top: 40%; left: 45%; animation-delay: -2s; }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-30px) scale(1.06); }
+    }
+
+    /* grid lines */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(123,97,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(123,97,255,.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at center, black 40%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-inner { position: relative; z-index: 1; max-width: 820px; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .35rem 1rem;
+      border-radius: 100px;
+      border: 1px solid rgba(123,97,255,.4);
+      background: rgba(123,97,255,.1);
+      font-size: .8rem;
+      color: var(--accent2);
+      margin-bottom: 1.8rem;
+      letter-spacing: .04em;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 8px #4ADE80;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: .3; }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.6rem, 7vw, 5.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      margin-bottom: 1.4rem;
+    }
+    h1 span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, #38BDF8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      padding: .8rem 2rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-weight: 600;
+      font-size: .95rem;
+      box-shadow: 0 0 30px var(--glow);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px var(--glow); }
+    .btn-ghost {
+      padding: .8rem 2rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .95rem;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      color: var(--muted);
+      font-size: .75rem;
+      letter-spacing: .08em;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─────────── SECTION BASE ─────────── */
+    section { padding: 6rem 5vw; }
+    .section-label {
+      font-size: .75rem;
+      letter-spacing: .14em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: .6rem;
+      font-weight: 600;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--muted);
+      max-width: 560px;
+      font-weight: 300;
+    }
+    .divider {
+      width: 48px; height: 3px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      border-radius: 2px;
+      margin: 1rem 0 2.5rem;
+    }
+
+    /* ─────────── ABOUT ─────────── */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: var(--r);
+      z-index: 0;
+    }
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: calc(var(--r) - 2px);
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--surface);
+      border-radius: calc(var(--r) - 2px);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: .9rem;
+      gap: .8rem;
+    }
+    .photo-placeholder svg { opacity: .4; }
+    .about-text { display: flex; flex-direction: column; gap: 1.2rem; }
+    .about-text p { color: var(--muted); font-weight: 300; line-height: 1.8; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: .75rem; color: var(--muted); margin-top: .2rem; }
+
+    /* ─────────── SKILLS ─────────── */
+    #skills { background: var(--surface); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .skill-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+      font-size: .88rem;
+      color: var(--muted);
+      transition: border-color .3s, color .3s, transform .2s, box-shadow .3s;
+      cursor: default;
+    }
+    .skill-chip:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px var(--glow);
+    }
+    .skill-chip .skill-icon { font-size: 1.6rem; margin-bottom: .5rem; }
+
+    /* ─────────── PORTFOLIO ─────────── */
+    .filter-bar {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0;
+    }
+    .filter-btn {
+      padding: .45rem 1.1rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: .82rem;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: inherit;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(123,97,255,.08);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* 3D flip card */
+    .card-wrap {
+      perspective: 1000px;
+      height: 280px;
+    }
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .55s cubic-bezier(.4,0,.2,1);
+      cursor: pointer;
+    }
+    .card-wrap:hover .card { transform: rotateY(180deg); }
+    .card-front, .card-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .card-front {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+    .card-front img {
+      width: 100%; height: 65%;
+      object-fit: cover;
+    }
+    .card-front-body { padding: 1rem 1.2rem; }
+    .card-tag {
+      font-size: .7rem;
+      color: var(--accent);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: .3rem;
+    }
+    .card-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; }
+    .card-back {
+      background: linear-gradient(135deg, #15112A, #0F1525);
+      border: 1px solid rgba(123,97,255,.4);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.5rem;
+      gap: .8rem;
+    }
+    .card-back-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .card-back-desc { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+    .card-back-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag-pill {
+      padding: .2rem .7rem;
+      border-radius: 100px;
+      background: rgba(123,97,255,.15);
+      border: 1px solid rgba(123,97,255,.3);
+      font-size: .72rem;
+      color: var(--accent2);
+    }
+    .card-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .82rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: .4rem;
+    }
+    .card-back-link:hover { text-decoration: underline; }
+
+    /* img placeholder inside card */
+    .img-placeholder {
+      width: 100%;
+      height: 65%;
+      background: linear-gradient(135deg, #1a1430, #0e1520);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: .8rem;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .img-placeholder svg { opacity: .3; }
+
+    /* ─────────── TESTIMONIALS ─────────── */
+    #testimonials { background: var(--surface); }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .testimonial-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.8rem;
+      position: relative;
+      transition: border-color .3s;
+    }
+    .testimonial-card:hover { border-color: rgba(123,97,255,.4); }
+    .quote-mark {
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--accent);
+      opacity: .3;
+      font-family: Georgia, serif;
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+    }
+    .testimonial-text {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.8;
+      margin-top: 1rem;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin-top: 1.4rem;
+    }
+    .author-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: .85rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .author-name { font-weight: 600; font-size: .88rem; }
+    .author-role { font-size: .75rem; color: var(--muted); }
+
+    /* ─────────── CONTACT ─────────── */
+    #contact {
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+    .contact-inner { max-width: 680px; }
+    .contact-inner .section-title { font-size: clamp(2rem, 5vw, 3.2rem); }
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+      text-align: right;
+    }
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.4rem 1.2rem;
+      transition: border-color .3s, transform .2s;
+    }
+    .contact-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .contact-icon { font-size: 1.5rem; margin-bottom: .6rem; }
+    .contact-name { font-size: .8rem; color: var(--muted); margin-bottom: .2rem; }
+    .contact-val { font-size: .88rem; font-weight: 500; }
+
+    /* ─────────── FOOTER ─────────── */
+    footer {
+      padding: 2rem 5vw;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    footer p { font-size: .8rem; color: var(--muted); }
+    .social-links { display: flex; gap: 1rem; }
+    .social-links a {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      color: var(--muted);
+      transition: border-color .2s, color .2s;
+    }
+    .social-links a:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─────────── ANIMATIONS ─────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─────────── RESPONSIVE ─────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #about .about-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+      .card-wrap { height: 240px; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 4rem 4vw; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─────────── MOBILE MENU ─────────── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-cta { display: none; }
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,15,.97);
+      backdrop-filter: blur(20px);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-close {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">نام شما</a>
+    <div class="nav-links">
+      <a href="#about">درباره</a>
+      <a href="#skills">مهارت‌ها</a>
+      <a href="#portfolio">آثار</a>
+      <a href="#testimonials">نظرات</a>
+      <a href="#contact" class="nav-cta">تماس</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-close" id="mobileClose">✕</div>
+    <a href="#about"         onclick="closeMobile()">درباره</a>
+    <a href="#skills"        onclick="closeMobile()">مهارت‌ها</a>
+    <a href="#portfolio"     onclick="closeMobile()">آثار</a>
+    <a href="#testimonials"  onclick="closeMobile()">نظرات</a>
+    <a href="#contact"       onclick="closeMobile()">تماس</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="hero-inner">
+      <div class="hero-badge">در دسترس برای همکاری</div>
+      <h1>
+        طراح خلاق<br>
+        و <span>توسعه‌دهنده</span><br>
+        دیجیتال
+      </h1>
+      <p class="hero-sub">
+        ترکیب هنر و فناوری برای خلق تجربه‌های دیجیتال ماندگار —
+        از ایده تا محصول نهایی.
+      </p>
+      <div class="hero-btns">
+        <a href="#portfolio" class="btn-primary">مشاهده آثار</a>
+        <a href="#contact"   class="btn-ghost">تماس بگیرید</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>اسکرول</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <!-- ── عکس خودتو اینجا جایگزین کن ── -->
+        <!--
+          گزینه ۱: عکس آپلودی
+          <img class="about-photo" src="photo.jpg" alt="عکس پروفایل" />
+
+          گزینه ۲: placeholder فعلی
+        -->
+        <div class="photo-placeholder">
+          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          عکس پروفایل را اینجا بگذارید
+        </div>
+      </div>
+
+      <div class="about-text reveal">
+        <div>
+          <div class="section-label">درباره من</div>
+          <h2 class="section-title">خلق می‌کنم،<br>تأثیر می‌گذارم.</h2>
+          <div class="divider"></div>
+        </div>
+        <p>
+          سلام! من <strong>نام شما</strong> هستم، طراح و توسعه‌دهنده‌ای با بیش از
+          <strong>X سال تجربه</strong> در خلق تجربه‌های دیجیتال.
+          اعتقاد دارم که بهترین کارها در تقاطع هنر و منطق شکل می‌گیرند.
+        </p>
+        <p>
+          از طراحی هویت بصری برای استارتاپ‌ها گرفته تا ساخت اینترفیس‌های پیچیده —
+          در هر پروژه دنبال آن لحظه‌ای می‌گردم که کاربر با محصول <strong>ارتباط واقعی</strong> برقرار می‌کند.
+        </p>
+        <div class="stats-row">
+          <div class="stat"><div class="stat-num">+50</div><div class="stat-label">پروژه تحویل‌شده</div></div>
+          <div class="stat"><div class="stat-num">+30</div><div class="stat-label">کلاینت راضی</div></div>
+          <div class="stat"><div class="stat-num">5★</div><div class="stat-label">میانگین امتیاز</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SKILLS ═══ -->
+  <section id="skills">
+    <div class="section-label reveal">تخصص‌ها</div>
+    <h2 class="section-title reveal">چه می‌دانم</h2>
+    <div class="divider reveal"></div>
+    <p class="section-desc reveal">ابزارها و مهارت‌هایی که با آن‌ها بهترین نتایج را می‌سازم.</p>
+
+    <div class="skills-grid">
+      <!-- ── مهارت‌ها را تغییر بده ── -->
+      <div class="skill-chip reveal"><div class="skill-icon">🎨</div>UI/UX طراحی</div>
+      <div class="skill-chip reveal"><div class="skill-icon">⚡</div>Figma</div>
+      <div class="skill-chip reveal"><div class="skill-icon">🌐</div>HTML / CSS</div>
+      <div class="skill-chip reveal"><div class="skill-icon">💻</div>JavaScript</div>
+      <div class="skill-chip reveal"><div class="skill-icon">⚛️</div>React</div>
+      <div class="skill-chip reveal"><div class="skill-icon">🎬</div>موشن گرافیک</div>
+      <div class="skill-chip reveal"><div class="skill-icon">📸</div>عکاسی</div>
+      <div class="skill-chip reveal"><div class="skill-icon">🖌️</div>تصویرسازی</div>
+      <div class="skill-chip reveal"><div class="skill-icon">📱</div>طراحی موبایل</div>
+      <div class="skill-chip reveal"><div class="skill-icon">🔍</div>برندینگ</div>
+      <div class="skill-chip reveal"><div class="skill-icon">📊</div>Premiere Pro</div>
+      <div class="skill-chip reveal"><div class="skill-icon">🚀</div>After Effects</div>
+    </div>
+  </section>
+
+  <!-- ═══ PORTFOLIO ═══ -->
+  <section id="portfolio">
+    <div class="section-label reveal">آثار</div>
+    <h2 class="section-title reveal">پروژه‌هایم</h2>
+    <div class="divider reveal"></div>
+    <p class="section-desc reveal">روی هر کارت ماوس ببرید تا جزئیات را ببینید.</p>
+
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all">همه</button>
+      <button class="filter-btn" data-filter="ui">UI/UX</button>
+      <button class="filter-btn" data-filter="motion">موشن</button>
+      <button class="filter-btn" data-filter="brand">برندینگ</button>
+      <button class="filter-btn" data-filter="photo">عکاسی</button>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid">
+
+      <!-- ══ کارت ۱ ══ -->
+      <div class="card-wrap reveal" data-cat="ui">
+        <div class="card">
+          <div class="card-front">
+            <!-- عکس پروژه: src رو عوض کن -->
+            <div class="img-placeholder">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+              </svg>
+              تصویر پروژه
+            </div>
+            <div class="card-front-body">
+              <div class="card-tag">UI/UX</div>
+              <div class="card-title">اپلیکیشن فروشگاهی</div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="card-back-title">اپلیکیشن فروشگاهی</div>
+            <div class="card-back-desc">طراحی کامل UX و UI برای یک پلتفرم تجارت الکترونیک با تمرکز بر تجربه موبایل.</div>
+            <div class="card-back-tags">
+              <span class="tag-pill">Figma</span>
+              <span class="tag-pill">Prototyping</span>
+              <span class="tag-pill">User Research</span>
+            </div>
+            <a class="card-back-link" href="#" target="_blank">مشاهده پروژه ←</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ کارت ۲ ══ -->
+      <div class="card-wrap reveal" data-cat="brand">
+        <div class="card">
+          <div class="card-front">
+            <div class="img-placeholder">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+              تصویر پروژه
+            </div>
+            <div class="card-front-body">
+              <div class="card-tag">برندینگ</div>
+              <div class="card-title">هویت بصری استارتاپ</div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="card-back-title">هویت بصری استارتاپ</div>
+            <div class="card-back-desc">طراحی لوگو، راهنمای برند، و مواد بازاریابی برای یک استارتاپ فین‌تک.</div>
+            <div class="card-back-tags">
+              <span class="tag-pill">Brand Identity</span>
+              <span class="tag-pill">Logo Design</span>
+              <span class="tag-pill">Illustrator</span>
+            </div>
+            <a class="card-back-link" href="#" target="_blank">مشاهده پروژه ←</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ کارت ۳ ══ -->
+      <div class="card-wrap reveal" data-cat="motion">
+        <div class="card">
+          <div class="card-front">
+            <div class="img-placeholder">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <polygon points="5,3 19,12 5,21"/>
+              </svg>
+              تصویر پروژه
+            </div>
+            <div class="card-front-body">
+              <div class="card-tag">موشن گرافیک</div>
+              <div class="card-title">تیزر تبلیغاتی</div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="card-back-title">تیزر تبلیغاتی</div>
+            <div class="card-back-desc">ساخت تیزر ۳۰ ثانیه‌ای برای کمپین شبکه‌های اجتماعی با بیش از ۵۰۰ هزار بازدید.</div>
+            <div class="card-back-tags">
+              <span class="tag-pill">After Effects</span>
+              <span class="tag-pill">Premiere</span>
+              <span class="tag-pill">Cinema 4D</span>
+            </div>
+            <a class="card-back-link" href="#" target="_blank">مشاهده پروژه ←</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ کارت ۴ ══ -->
+      <div class="card-wrap reveal" data-cat="photo">
+        <div class="card">
+          <div class="card-front">
+            <div class="img-placeholder">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+              </svg>
+              تصویر پروژه
+            </div>
+            <div class="card-front-body">
+              <div class="card-tag">عکاسی</div>
+              <div class="card-title">پروژه پرتره شهری</div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="card-back-title">پرتره شهری</div>
+            <div class="card-back-desc">مجموعه عکاسی پرتره در فضای شهری تهران — ۴۰ عکس منتخب نمایش‌گاهی.</div>
+            <div class="card-back-tags">
+              <span class="tag-pill">Portrait</span>
+              <span class="tag-pill">Street Photo</span>
+              <span class="tag-pill">Lightroom</span>
+            </div>
+            <a class="card-back-link" href="#" target="_blank">مشاهده پروژه ←</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ کارت ۵ ══ -->
+      <div class="card-wrap reveal" data-cat="ui">
+        <div class="card">
+          <div class="card-front">
+            <div class="img-placeholder">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+              </svg>
+              تصویر پروژه
+            </div>
+            <div class="card-front-body">
+              <div class="card-tag">UI/UX</div>
+              <div class="card-title">داشبورد آنالیتیکس</div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="card-back-title">داشبورد آنالیتیکس</div>
+            <div class="card-back-desc">طراحی داشبورد تحلیل داده برای یک شرکت SaaS با تمرکز بر سادگی و خوانایی.</div>
+            <div class="card-back-tags">
+              <span class="tag-pill">Dashboard</span>
+              <span class="tag-pill">Data Viz</span>
+              <span class="tag-pill">React</span>
+            </div>
+            <a class="card-back-link" href="#" target="_blank">مشاهده پروژه ←</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ کارت ۶ ══ -->
+      <div class="card-wrap reveal" data-cat="brand">
+        <div class="card">
+          <div class="card-front">
+            <div class="img-placeholder">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 8v4l3 3"/>
+              </svg>
+              تصویر پروژه
+            </div>
+            <div class="card-front-body">
+              <div class="card-tag">برندینگ</div>
+              <div class="card-title">ریبرندینگ رستوران</div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="card-back-title">ریبرندینگ رستوران</div>
+            <div class="card-back-desc">بازطراحی کامل هویت بصری یک رستوران شامل منو، بسته‌بندی و دکور.</div>
+            <div class="card-back-tags">
+              <span class="tag-pill">Rebranding</span>
+              <span class="tag-pill">Packaging</span>
+              <span class="tag-pill">Print Design</span>
+            </div>
+            <a class="card-back-link" href="#" target="_blank">مشاهده پروژه ←</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /portfolio-grid -->
+  </section>
+
+  <!-- ═══ TESTIMONIALS ═══ -->
+  <section id="testimonials">
+    <div class="section-label reveal">نظرات</div>
+    <h2 class="section-title reveal">مشتریان چه می‌گویند</h2>
+    <div class="divider reveal"></div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal">
+        <div class="quote-mark">"</div>
+        <div class="testimonial-text">کار با ایشان واقعاً تجربه‌ای متفاوت بود. نه‌تنها طراحی بسیار حرفه‌ای بود، بلکه در تمام مراحل پروژه ارتباط و صداقت کامل داشتند.</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">ع</div>
+          <div>
+            <div class="author-name">علی محمدی</div>
+            <div class="author-role">مدیر عامل، استارتاپ فین‌تک</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="quote-mark">"</div>
+        <div class="testimonial-text">پروژه برندینگ را کاملاً طبق خواسته‌هایمان پیش بردند. نتیجه از انتظارمان فراتر رفت و مشتریانمان به وضوح تأثیر آن را احساس کردند.</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">س</div>
+          <div>
+            <div class="author-name">سارا احمدی</div>
+            <div class="author-role">بنیان‌گذار، آژانس دیجیتال مارکتینگ</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="quote-mark">"</div>
+        <div class="testimonial-text">سرعت، دقت، و خلاقیت — هر سه را با هم داشتند. تیزر تبلیغاتی که ساختند رکورد بازدید ما را شکست. قطعاً دوباره همکاری خواهیم کرد.</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">م</div>
+          <div>
+            <div class="author-name">محمد رضایی</div>
+            <div class="author-role">مدیر بازاریابی، برند پوشاک</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label reveal">تماس</div>
+      <h2 class="section-title reveal">بیایید یک چیز <span style="background:linear-gradient(135deg,#7B61FF,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">خوب</span> بسازیم</h2>
+      <div class="divider reveal" style="margin: 1rem auto 2rem;"></div>
+      <p class="section-desc reveal" style="margin: 0 auto;">
+        پروژه‌ای در ذهن دارید؟ برای همکاری، مشاوره، یا فقط یک سلام — در دسترسم.
+      </p>
+      <div class="contact-cards reveal">
+        <!-- ── اطلاعات تماس را ویرایش کن ── -->
+        <a href="mailto:youremail@gmail.com" class="contact-card">
+          <div class="contact-icon">📧</div>
+          <div class="contact-name">ایمیل</div>
+          <div class="contact-val">youremail@gmail.com</div>
+        </a>
+        <a href="https://t.me/yourusername" target="_blank" class="contact-card">
+          <div class="contact-icon">💬</div>
+          <div class="contact-name">تلگرام</div>
+          <div class="contact-val">@yourusername</div>
+        </a>
+        <a href="https://instagram.com/yourusername" target="_blank" class="contact-card">
+          <div class="contact-icon">📷</div>
+          <div class="contact-name">اینستاگرام</div>
+          <div class="contact-val">@yourusername</div>
+        </a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" class="contact-card">
+          <div class="contact-icon">💼</div>
+          <div class="contact-name">لینکدین</div>
+          <div class="contact-val">linkedin</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <span class="logo">نام شما</span>
+    <p>© ۱۴۰۳ — با ❤️ ساخته شده</p>
+    <div class="social-links">
+      <a href="#" title="اینستاگرام">📷</a>
+      <a href="#" title="تلگرام">💬</a>
+      <a href="#" title="لینکدین">💼</a>
+      <a href="#" title="گیت‌هاب">💻</a>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll reveal ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 60);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ── Navbar scroll shadow ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.style.boxShadow = window.scrollY > 10
+        ? '0 4px 30px rgba(0,0,0,.4)'
+        : 'none';
+    });
+
+    // ── Portfolio filter ──
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards      = document.querySelectorAll('.card-wrap[data-cat]');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        cards.forEach(c => {
+          const show = f === 'all' || c.dataset.cat === f;
+          c.style.opacity    = show ? '1' : '0.2';
+          c.style.transform  = show ? '' : 'scale(.95)';
+          c.style.pointerEvents = show ? '' : 'none';
+          c.style.transition = 'opacity .35s, transform .35s';
+        });
+      });
+    });
+
+    // ── Mobile menu ──
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose= document.getElementById('mobileClose');
+    hamburger .addEventListener('click', () => mobileMenu.classList.add('open'));
+    mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+
+    // ── Smooth active link highlight ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-links a');
+    const onScroll = () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--text)' : '';
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  </script>
+</body>
+</html>
